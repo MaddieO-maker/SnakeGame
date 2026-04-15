@@ -9,3 +9,12 @@ Make the snake move automatically using a Swing timer that ticks every 150 milli
 
 // Prompt 4
 Add a food pellet that spawns at a random empty cell. When the snake eats it, grow by one segment and spawn new food. Add collision detection: hitting a wall or the snake's own body should end the game, stop movement, and show a "Game Over" message with the final score. Display the current score in the top-left corner during play. When the game is over, let the player press R to reset everything and play again.
+Fixes: Had to add the final score message to the "Game Over" screen.
+
+// Prompt 5
+Round the first and last cell of the snake to better represent a snake shape. Each cell of the snake should be a color of the rainbow that gradates into the following cells in a rainbow pattern (Red, Orange, Yellow, Green, Blue, Indigo, Purple) and repeat.
+Result: First and last cells of snake are rounded boxes (I wanted only front half cell rounded and back half cell rounded). Colors extend backwards (Wanted red to be the leading color always)
+Fix Prompt: Round only the front half of the first cell and back half of the last cell
+Fix Prompt: Have red be the leading cell always and colors grow from the back end of the snake
+Fix Prompt: Make colors gradate in between cells and blend
+Result: Did not work. Messed up my rainbow order. Undid prompt

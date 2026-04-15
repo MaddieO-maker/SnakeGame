@@ -21,7 +21,15 @@ public class SnakeGame {
         private static final int ROWS = 20;
         private static final Color BACKGROUND_COLOR = new Color(40, 40, 40);
         private static final Color GRID_COLOR = new Color(60, 60, 60);
-        private static final Color SNAKE_COLOR = new Color(0, 200, 0);
+        private static final Color[] RAINBOW_COLORS = {
+            Color.RED,
+            new Color(255, 165, 0),
+            Color.YELLOW,
+            Color.GREEN,
+            Color.BLUE,
+            new Color(75, 0, 130),
+            new Color(128, 0, 128)
+        };
         private static final Color FOOD_COLOR = new Color(200, 80, 0);
         private static final Color TEXT_COLOR = Color.WHITE;
         private static final int TIMER_DELAY = 150;
@@ -147,10 +155,86 @@ public class SnakeGame {
         }
 
         private void drawSnake(Graphics g) {
-            g.setColor(SNAKE_COLOR);
-            for (Point segment : snake) {
-                g.fillRect(segment.x * CELL_SIZE, segment.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            Graphics2D g2 = (Graphics2D) g.create();
+            for (int i = 0; i < snake.size(); i++) {
+                Point segment = snake.get(i);
+                int colorIndex = (snake.size() - 1 - i) % RAINBOW_COLORS.length;
+                if (colorIndex < 0) {
+                    colorIndex += RAINBOW_COLORS.length;
+                }
+                g2.setColor(RAINBOW_COLORS[colorIndex]);
+                int x = segment.x * CELL_SIZE;
+                int y = segment.y * CELL_SIZE;
+
+                if (i == snake.size() - 1 && snake.size() > 1) {
+                    Direction headDirection = getDirection(snake.get(i - 1), segment);
+                    drawHalfRoundedSegment(g2, x, y, headDirection, true);
+                } else if (i == 0 && snake.size() > 1) {
+                    Direction tailDirection = getDirection(segment, snake.get(1));
+                    drawHalfRoundedSegment(g2, x, y, tailDirection, false);
+                } else {
+                    g2.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+                }
             }
+            g2.dispose();
+        }
+
+        private void drawHalfRoundedSegment(Graphics2D g2, int x, int y, Direction direction, boolean frontHalfRounded) {
+            int arc = CELL_SIZE / 2;
+            g2.fillRoundRect(x, y, CELL_SIZE, CELL_SIZE, arc, arc);
+            if (direction == null) {
+                return;
+            }
+
+            if (frontHalfRounded) {
+                switch (direction) {
+                    case RIGHT:
+                        g2.fillRect(x, y, CELL_SIZE / 2, CELL_SIZE);
+                        break;
+                    case LEFT:
+                        g2.fillRect(x + CELL_SIZE / 2, y, CELL_SIZE / 2, CELL_SIZE);
+                        break;
+                    case DOWN:
+                        g2.fillRect(x, y, CELL_SIZE, CELL_SIZE / 2);
+                        break;
+                    case UP:
+                        g2.fillRect(x, y + CELL_SIZE / 2, CELL_SIZE, CELL_SIZE / 2);
+                        break;
+                }
+            } else {
+                switch (direction) {
+                    case RIGHT:
+                        g2.fillRect(x + CELL_SIZE / 2, y, CELL_SIZE / 2, CELL_SIZE);
+                        break;
+                    case LEFT:
+                        g2.fillRect(x, y, CELL_SIZE / 2, CELL_SIZE);
+                        break;
+                    case DOWN:
+                        g2.fillRect(x, y + CELL_SIZE / 2, CELL_SIZE, CELL_SIZE / 2);
+                        break;
+                    case UP:
+                        g2.fillRect(x, y, CELL_SIZE, CELL_SIZE / 2);
+                        break;
+                }
+            }
+        }
+
+        private Direction getDirection(Point from, Point to) {
+            int dx = to.x - from.x;
+            int dy = to.y - from.y;
+            if (dx > 0) {
+                return Direction.RIGHT;
+            }
+            if (dx < 0) {
+                return Direction.LEFT;
+            }
+            if (dy > 0) {
+                return Direction.DOWN;
+            }
+            if (dy < 0) {
+                return Direction.UP;
+            }
+            return null;
         }
 
         private void drawFood(Graphics g) {
