@@ -18,3 +18,7 @@ Fix Prompt: Round only the front half of the first cell and back half of the las
 Fix Prompt: Have red be the leading cell always and colors grow from the back end of the snake
 Fix Prompt: Make colors gradate in between cells and blend
 Result: Did not work. Messed up my rainbow order. Undid prompt
+
+Added Prompt: Make the leading cell (first cell) have two black dots for eyes and a "Y" shaped tougue sticking out
+Result: Eyes are on back side of cell with a black "V" on the front part of cell. Do not like. 
+Fix: Make eyes sit towards the front of the cell. Make the toungue a pink color that extends from the front of the cell, not on the cell

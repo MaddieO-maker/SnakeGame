@@ -169,6 +169,7 @@ public class SnakeGame {
                 if (i == snake.size() - 1 && snake.size() > 1) {
                     Direction headDirection = getDirection(snake.get(i - 1), segment);
                     drawHalfRoundedSegment(g2, x, y, headDirection, true);
+                    drawHeadFeatures(g2, x, y, headDirection);
                 } else if (i == 0 && snake.size() > 1) {
                     Direction tailDirection = getDirection(segment, snake.get(1));
                     drawHalfRoundedSegment(g2, x, y, tailDirection, false);
@@ -177,6 +178,49 @@ public class SnakeGame {
                 }
             }
             g2.dispose();
+        }
+
+        private void drawHeadFeatures(Graphics2D g2, int x, int y, Direction direction) {
+            g2.setColor(Color.BLACK);
+            int eyeSize = 4;
+            int eyeOffset = 4;
+            int eyeDepth = 8;
+            int tongueLength = 12;
+            int tongueFork = 4;
+            switch (direction) {
+                case RIGHT:
+                    g2.fillOval(x + CELL_SIZE - eyeDepth - eyeSize, y + eyeOffset, eyeSize, eyeSize);
+                    g2.fillOval(x + CELL_SIZE - eyeDepth - eyeSize, y + CELL_SIZE - eyeOffset - eyeSize, eyeSize, eyeSize);
+                    g2.setColor(new Color(255, 105, 180));
+                    g2.drawLine(x + CELL_SIZE, y + CELL_SIZE / 2, x + CELL_SIZE + tongueLength, y + CELL_SIZE / 2);
+                    g2.drawLine(x + CELL_SIZE + tongueLength - tongueFork, y + CELL_SIZE / 2, x + CELL_SIZE + tongueLength, y + CELL_SIZE / 2 - tongueFork);
+                    g2.drawLine(x + CELL_SIZE + tongueLength - tongueFork, y + CELL_SIZE / 2, x + CELL_SIZE + tongueLength, y + CELL_SIZE / 2 + tongueFork);
+                    break;
+                case LEFT:
+                    g2.fillOval(x + eyeDepth, y + eyeOffset, eyeSize, eyeSize);
+                    g2.fillOval(x + eyeDepth, y + CELL_SIZE - eyeOffset - eyeSize, eyeSize, eyeSize);
+                    g2.setColor(new Color(255, 105, 180));
+                    g2.drawLine(x, y + CELL_SIZE / 2, x - tongueLength, y + CELL_SIZE / 2);
+                    g2.drawLine(x - tongueLength + tongueFork, y + CELL_SIZE / 2, x - tongueLength, y + CELL_SIZE / 2 - tongueFork);
+                    g2.drawLine(x - tongueLength + tongueFork, y + CELL_SIZE / 2, x - tongueLength, y + CELL_SIZE / 2 + tongueFork);
+                    break;
+                case DOWN:
+                    g2.fillOval(x + eyeOffset, y + CELL_SIZE - eyeDepth - eyeSize, eyeSize, eyeSize);
+                    g2.fillOval(x + CELL_SIZE - eyeOffset - eyeSize, y + CELL_SIZE - eyeDepth - eyeSize, eyeSize, eyeSize);
+                    g2.setColor(new Color(255, 105, 180));
+                    g2.drawLine(x + CELL_SIZE / 2, y + CELL_SIZE, x + CELL_SIZE / 2, y + CELL_SIZE + tongueLength);
+                    g2.drawLine(x + CELL_SIZE / 2, y + CELL_SIZE + tongueLength - tongueFork, x + CELL_SIZE / 2 - tongueFork, y + CELL_SIZE + tongueLength);
+                    g2.drawLine(x + CELL_SIZE / 2, y + CELL_SIZE + tongueLength - tongueFork, x + CELL_SIZE / 2 + tongueFork, y + CELL_SIZE + tongueLength);
+                    break;
+                case UP:
+                    g2.fillOval(x + eyeOffset, y + eyeDepth, eyeSize, eyeSize);
+                    g2.fillOval(x + CELL_SIZE - eyeOffset - eyeSize, y + eyeDepth, eyeSize, eyeSize);
+                    g2.setColor(new Color(255, 105, 180));
+                    g2.drawLine(x + CELL_SIZE / 2, y, x + CELL_SIZE / 2, y - tongueLength);
+                    g2.drawLine(x + CELL_SIZE / 2, y - tongueLength + tongueFork, x + CELL_SIZE / 2 - tongueFork, y - tongueLength);
+                    g2.drawLine(x + CELL_SIZE / 2, y - tongueLength + tongueFork, x + CELL_SIZE / 2 + tongueFork, y - tongueLength);
+                    break;
+            }
         }
 
         private void drawHalfRoundedSegment(Graphics2D g2, int x, int y, Direction direction, boolean frontHalfRounded) {
