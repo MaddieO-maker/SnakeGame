@@ -16,7 +16,7 @@ Round the first and last cell of the snake to better represent a snake shape. Ea
 Result: First and last cells of snake are rounded boxes (I wanted only front half cell rounded and back half cell rounded). Colors extend backwards (Wanted red to be the leading color always)
 Fix Prompt: Round only the front half of the first cell and back half of the last cell
 Fix Prompt: Have red be the leading cell always and colors grow from the back end of the snake
-Fix Prompt: Make colors gradate in between cells and blend
+Fix Prompt: Make colors gradient in between cells and blend
 Result: Did not work. Messed up my rainbow order. Undid prompt
 
 Added Prompt: Make the leading cell (first cell) have two black dots for eyes and a "Y" shaped tougue sticking out
